@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>김남해</title>
+
+	<link rel="icon" type="image/png" href="image/favicon.png"/>
+	<meta name="description" content="개발자 김남해의 포트폴리오. 프로젝트, 기술 스택, 경력을 확인하고 연락주세요."/>
+	<meta property="og:title" content="김남해 포트폴리오"/>
+	<meta property="og:description" content="사용성과 인터랙션을 중시하는 프론트엔드 개발자 김남해의 이력서와 프로젝트 모음집입니다."/>
+	<meta property="og:image" content="image/thumbnail.jpg"/>
+	<meta property="og:type" content="website"/>
+	<meta property="og:url" content="YOUR_WEBSITE_URL_HERE"/>
+	<meta name="twitter:card" content="summary_large_image"/>
+	<meta name="twitter:title" content="김남해 프론트엔드 포트폴리오"/>
+	<meta name="twitter:description" content="사용성과 인터랙션을 중시하는 프론트엔드 개발자 김남해의 이력서와 프로젝트 모음집입니다."/>
+	<meta name="twitter:image" content="image/thumbnail.jpg"/>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="style.css">
+
+	<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "WebSite",
+			"name": "김남해 포트폴리오",
+			"url": "YOUR_WEBSITE_URL_HERE",
+			"author": {
+				"@type": "Person",
+				"name": "김남해",
+				"jobTitle": "프론트엔드 개발자",
+				"email": "tksz0613@gmail.com",
+				"telephone": "+82-10-2895-7823",
+				"url": "YOUR_WEBSITE_URL_HERE"
+			}
+		}
+	</script>
+</head>
+
+<body>
+<h1 class="visually-hidden">김남해 프론트엔드 개발자 포트폴리오</h1>
+
+<button class="dark-toggle" aria-label="테마 전환">다크 모드</button>
+<div id="header-placeholder"></div>
+
+<main>
+	<section class="profile-info js-scroll-fade-in" id="profile">
+		<img src="image/profile.jpg" alt="김남해 프로필 사진">
+		<div class="profile-text">
+			<h2>김남해</h2>
+			<p>풀스택 개발자 | 사용성 중심의 프론트엔드 설계자</p>
+			<div class="contact">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="18" height="18">
+						<path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6l-39.7 47.6c-54-29.4-99.4-74.9-128.8-128.8l47.6-39.7c13.7-11.2 18.4-30 11.6-46.3l-40-96z"
+							  fill="currentColor"/>
+					</svg>
+					010-2895-7823
+				</p>
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="18" height="18">
+						<path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"
+							  fill="currentColor"/>
+					</svg>
+					<a href="mailto:tksz0613@gmail.com">tksz0613@gmail.com</a></p>
+				<p>📄 <a href="resume.pdf" target="_blank" download="김남해_이력서.pdf">이력서 다운로드</a></p>
+			</div>
+			<div class="social-icons">
+				<a href="https://github.com/SouthSea0613" target="_blank" aria-label="GitHub 프로필">GitHub</a>
+				<a href="mailto:tksz0613@gmail.com" aria-label="이메일 보내기">Email</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="slider js-scroll-fade-in" id="projects" aria-roledescription="carousel" aria-label="주요 프로젝트 슬라이더">
+		<button class="slide-btn prev" aria-label="이전 슬라이드">‹</button>
+		<div class="slides" id="slidesContainer" aria-live="polite"></div>
+		<button class="slide-btn next" aria-label="다음 슬라이드">›</button>
+		<div class="slide-indicators" id="indicators" role="tablist" aria-label="슬라이드 네비게이션"></div>
+	</section>
+
+	<section class="content" id="contentPostSection" aria-label="추가 프로젝트 및 포스트"></section>
+
+	<section class="content">
+		<div class="resume-section js-scroll-fade-in" id="skills">
+			<h2>기술 스택</h2>
+			<div class="two-column">
+				<ul>
+					<li><strong>프론트엔드:</strong> JavaScript (ES6+), TypeScript, React, Vue</li>
+					<li><strong>백엔드:</strong> Node.js, Express</li>
+					<li><strong>데이터베이스:</strong> MongoDB, MySQL</li>
+				</ul>
+				<ul>
+					<li><strong>도구:</strong> Git, GitHub, Docker, Figma, Adobe XD</li>
+					<li><strong>기타:</strong> Web Accessibility, Responsive Design</li>
+				</ul>
+			</div>
+		</div>
+		<div class="resume-section js-scroll-fade-in" id="education">
+			<h2>교육</h2>
+			<ul>
+				<li><strong>멋쟁이사자처럼 프론트엔드 스쿨 수료</strong> (2023)</li>
+				<li><strong>FastCampus 풀스택 부트캠프</strong> (2022)</li>
+			</ul>
+		</div>
+		<div class="resume-section js-scroll-fade-in" id="experience">
+			<h2>경력</h2>
+			<ul>
+				<li><strong>ABC소프트웨어</strong> (2023~현재) - 프론트엔드 개발자</li>
+				<li><strong>XYZ 스타트업</strong> (2021~2023) - 웹 퍼블리셔 & UI 디자이너</li>
+			</ul>
+		</div>
+	</section>
+
+	<section id="contactSection" class="js-scroll-fade-in" aria-labelledby="contactHeading">
+		<h2 id="contactHeading">연락하기</h2>
+		<form class="contact-form" id="contactForm" action="YOUR_FORMSPREE_ENDPOINT" method="POST">
+			<div class="form-group">
+				<label for="name">이름</label>
+				<input type="text" id="name" name="name" required>
+			</div>
+			<div class="form-group">
+				<label for="email">이메일</label>
+				<input type="email" id="email" name="email" required>
+			</div>
+			<div class="form-group">
+				<label for="message">메시지</label>
+				<textarea id="message" name="message" required></textarea>
+			</div>
+			<button type="submit" class="submit-btn">메시지 보내기</button>
+			<div id="formStatus"></div>
+		</form>
+	</section>
+
+</main>
+
+<div id="footer-placeholder"></div>
+
+<div class="modal" id="projectModal" aria-modal="true" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+	<div class="modal-content">
+		<button class="modal-close-btn" aria-label="닫기">&times;</button>
+		<h3 id="modalTitle"></h3>
+		<div class="modal-body" id="modalBody"></div>
+	</div>
+</div>
+
+<div class="overlay" id="menuOverlay"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
