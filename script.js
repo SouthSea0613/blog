@@ -693,8 +693,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 	applySavedTheme();
 
 	// Load Header and Footer concurrently
-	const headerPromise = loadComponent('_header.html', 'header-placeholder');
-	const footerPromise = loadComponent('_footer.html', 'footer-placeholder');
+	const headerPromise = loadComponent('header.html', 'header-placeholder');
+	const footerPromise = loadComponent('footer.html', 'footer-placeholder');
 
 	// Wait for both header and footer to finish loading (or fail)
 	const [headerLoaded, footerLoaded] = await Promise.all([headerPromise, footerPromise]);
