@@ -114,7 +114,6 @@ async function loadComponent(url, placeholderId) {
 	}
 }
 
-
 /**
  * Updates the visual state of slider indicators.
  */
@@ -252,9 +251,6 @@ function openModal(title, details) {
 	stopSliderAutoPlay(); // Stop slider when modal is open
 }
 
-/**
- * Closes the project detail modal.
- */
 function closeModal() {
 	if (!modalEl || !overlayEl) return;
 	modalEl.classList.remove('is-open');
@@ -265,9 +261,6 @@ function closeModal() {
 	startSliderAutoPlay(); // Restart slider potentially
 }
 
-/**
- * Initializes Intersection Observer for scroll fade-in effects.
- */
 function initializeScrollFadeIn() {
 	const scrollFadeInElements = document.querySelectorAll('.js-scroll-fade-in');
 	if (!('IntersectionObserver' in window) || !scrollFadeInElements.length) {
@@ -334,7 +327,6 @@ function generateNavigationLinks(projectData) {
 	});
 }
 
-
 /**
  * Generates slider slides and indicators based on project data.
  * @param {Array} projectData - Array of project objects.
@@ -344,7 +336,6 @@ function generateSliderContent(projectData) {
 	indicatorsContainerEl = document.getElementById('indicators');
 	slidePrevBtn = document.querySelector('.slider .slide-btn.prev'); // Select slider buttons
 	slideNextBtn = document.querySelector('.slider .slide-btn.next');
-
 
 	if (!slidesContainerEl || !indicatorsContainerEl || !slidePrevBtn || !slideNextBtn) {
 		console.error("Slider containers or buttons not found.");
@@ -425,7 +416,6 @@ function generateSliderContent(projectData) {
 		}
 	}
 }
-
 
 /**
  * Generates content post elements in the designated section.
@@ -577,14 +567,12 @@ function initializePageFunctionality() {
 		console.warn("Slider buttons not found.");
 	}
 
-
 	// Modal Close Button
 	if (modalCloseBtn) {
 		modalCloseBtn.addEventListener('click', closeModal);
 	} else {
 		console.warn("Modal close button not found.");
 	}
-
 
 	// Overlay Click (for closing menu or modal)
 	if (overlayEl) {
@@ -599,14 +587,12 @@ function initializePageFunctionality() {
 		console.warn("Overlay element not found.");
 	}
 
-
 	// Contact Form Submission
 	if (contactForm) {
 		contactForm.addEventListener('submit', handleFormSubmit);
 	} else {
 		console.warn("Contact form not found.");
 	}
-
 
 	// Global Keydown Listener (Escape key)
 	window.addEventListener('keydown', (event) => {
@@ -684,7 +670,6 @@ function initializePageFunctionality() {
 	console.log("Page functionality initialized.");
 }
 
-
 // --- DOMContentLoaded Event Listener ---
 document.addEventListener('DOMContentLoaded', async () => {
 	console.log("DOM fully loaded and parsed.");
@@ -719,5 +704,4 @@ document.addEventListener('DOMContentLoaded', async () => {
 	// Fallback for scroll fade-in if elements were added dynamically after initial load
 	// This ensures elements added by JS also get observed if they have the class.
 	initializeScrollFadeIn();
-
 });
