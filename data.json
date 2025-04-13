@@ -4,7 +4,7 @@
       "id": "project1",
       "title": "수행 프로젝트: Character Augmented Reality Defense",
       "sliderTitle": "Character Augmented Reality Defense",
-      "sliderImage": "image/card.png",
+      "sliderImage": "image/card.jpg",
       "altText": "Character Augmented Reality Defense 프로젝트 이미지",
       "period": "2022.08 ~ 2023.05",
       "technologies": [
@@ -30,8 +30,9 @@
         "졸업작품 경쟁력 확보 전략 수립",
         "최종 프레젠테이션 발표 및 금상 수상 기여"
       ],
-      "detailImage": "image/card.png",
+      "detailImage": "image/card.jpg",
       "detailImages": [
+        "image/hts.jpg"
       ],
       "resultLink": "https://www.youtube.com/watch?v=4EHBmFiC97Mhttps://drive.google.com/file/d/1G12iSY7NPMnQKy9FOQJT1capCuIfenMI/view"
     },
@@ -39,7 +40,7 @@
       "id": "project2",
       "title": "수행 프로젝트: Hex Tile Strategy",
       "sliderTitle": "Hex Tile Strategy",
-      "sliderImage": "image/hts.png",
+      "sliderImage": "image/그림3.png",
       "altText": "Hex Tile Strategy 프로젝트 이미지",
       "period": "2023.03 ~ 2024.08",
       "technologies": [
@@ -62,8 +63,10 @@
         "TCG 스타일 UI (카드, 유닛 스킬 등) 구현",
         "오브젝트(타일, 유닛, 지형 등) 정규화 및 코드 재구성"
       ],
-      "detailImage": "image/hts.png",
+      "detailImage": "image/그림3.png",
       "detailImages": [
+        "image/그림5.png",
+        "image/그림6.png"
       ],
       "resultNote": "팀원 요청에 의한 공개 불가"
     },
@@ -118,7 +121,7 @@
   ],
   "contentPosts": [
     {
-      "imageSrc": "image/thumb_chess.jpg",
+      "imageSrc": "image/그림4.png",
       "altText": "Turn & Chess 프로젝트 이미지",
       "title": "개인 프로젝트: Turn & Chess",
       "description": "C++과 .NET 프레임워크를 활용하여 정사각형 필드맵 기반의 턴제 체스 게임 구현. 기물별 이동 범위 및 플레이어 턴 시스템 개발.",
@@ -134,7 +137,7 @@
       "period": "2025.02 ~ 진행 중"
     },
     {
-      "imageSrc": "image/thumb_ann_cnn.jpg",
+      "imageSrc": "image/그림7.png",
       "altText": "ANN, CNN 구현 프로젝트 이미지",
       "title": "개인 프로젝트: ANN, CNN 직접 구현",
       "description": "인공 신경망 기초 이해를 위해 Keras, Pytorch 등 라이브러리 없이 C, Java, Python으로 ANN, CNN 기본 연산 구현.",
@@ -142,7 +145,7 @@
       "period": "2023.03 ~ 2023.06"
     },
     {
-      "imageSrc": "image/thumb_ffxiv.jpg",
+      "imageSrc": "image/그림9.png",
       "altText": "FFXIV 빅데이터 분석 프로젝트 이미지",
       "title": "개인 프로젝트: FFXIV 빅데이터 분석",
       "description": "ffxiv logs API를 통해 게임 데이터 수집 및 분석. 빅데이터 분석 기법을 활용하여 게임 내 최적 해결 방법 도출 시도.",
