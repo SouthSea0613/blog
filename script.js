@@ -262,31 +262,50 @@ function closeModal() {
  * Initializes Intersection Observer for scroll fade-in effects.
  */
 function initializeScrollFadeIn() {
-	const scrollFadeInElements = document.querySelectorAll('.js-scroll-fade-in');
-	if (!('IntersectionObserver' in window) || !scrollFadeInElements || scrollFadeInElements.length === 0) {
-		console.warn("IntersectionObserver not supported or no elements with .js-scroll-fade-in found. Showing all elements.");
-		// Fallback: show all elements immediately if observer isn't supported or no elements use it
-		if (scrollFadeInElements) {
-			scrollFadeInElements.forEach(el => {
+	// 모든 스크롤 효과 대상 요소를 선택
+	const scrollFadeElements = document.querySelectorAll('.js-scroll-fade-in, .scroll-fade-image');
+
+	// IntersectionObserver 지원 여부 및 대상 요소 존재 여부 확인
+	if (!('IntersectionObserver' in window) || !scrollFadeElements || scrollFadeElements.length === 0) {
+		console.warn("IntersectionObserver not supported or no elements for scroll effects found. Showing all elements.");
+		// 지원 안하거나 요소 없으면 즉시 보이게 처리 (Fallback)
+		if (scrollFadeElements) {
+			scrollFadeElements.forEach(el => {
 				el.style.opacity = 1;
-				el.style.transform = 'translateY(0)';
-				el.classList.add('is-visible'); // Mark as visible for consistency
+				// transform 초기화 (translateX, translateY, scale 모두 고려)
+				el.style.transform = 'translate(0, 0) scale(1)';
+				el.classList.add('is-visible'); // 활성 클래스 추가
 			});
 		}
-		return;
+		return; // 함수 종료
 	}
 
-	const observerOptions = {root: null, rootMargin: '0px', threshold: 0.1};
+	// Observer 설정값
+	const observerOptions = {
+		root: null, // 뷰포트를 기준으로 감지
+		rootMargin: '0px 0px -50px 0px', // 화면 하단에서 50px 위에서부터 감지 시작 (조절 가능)
+		threshold: 0.1 // 요소가 10% 보였을 때 실행 (조절 가능)
+	};
+
+	// Observer 콜백 함수: 요소가 화면에 들어오면 실행됨
 	const observerCallback = (entries, observer) => {
 		entries.forEach(entry => {
-			if (entry.isIntersecting) {
-				entry.target.classList.add('is-visible');
-				observer.unobserve(entry.target); // Stop observing once visible
+			if (entry.isIntersecting) { // 요소가 화면에 보이는지 확인
+				entry.target.classList.add('is-visible'); // 활성화 클래스 추가
+				observer.unobserve(entry.target); // 한 번 효과가 적용되면 더 이상 감지하지 않음
 			}
 		});
 	};
+
+	// Intersection Observer 인스턴스 생성
 	const scrollObserver = new IntersectionObserver(observerCallback, observerOptions);
-	scrollFadeInElements.forEach(el => scrollObserver.observe(el));
+
+	// 각 대상 요소를 Observer에 등록하여 감지 시작
+	scrollFadeElements.forEach(el => {
+		scrollObserver.observe(el);
+	});
+
+	console.log(`Initialized scroll fade effects for ${scrollFadeElements.length} elements.`);
 }
 
 /**

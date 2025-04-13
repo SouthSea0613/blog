@@ -999,6 +999,7 @@ footer a {
     border-left: 5px solid var(--accent); /* 왼쪽 강조선 */
     border-radius: 8px;
 }
+
 body.dark-mode .project-meta {
     background-color: rgba(255,255,255,0.04); /* 다크모드 시 약간 밝은 배경 */
 }
@@ -1026,6 +1027,7 @@ body.dark-mode .project-meta {
     margin-bottom: 8px; /* 줄바꿈 시 여백 */
     font-weight: 500;
 }
+
 body.dark-mode #project-tech .tech-tag { /* 다크 모드 태그 색상 반전 */
     background-color: var(--post-bg);
     color: var(--text-color);
@@ -1057,6 +1059,7 @@ body.dark-mode #project-tech .tech-tag { /* 다크 모드 태그 색상 반전 *
     position: relative;
     font-size: 1.05em;
 }
+
 #project-roles li::before { /* 커스텀 불릿 (✨) */
     content: '✨';
     position: absolute;
@@ -1065,7 +1068,6 @@ body.dark-mode #project-tech .tech-tag { /* 다크 모드 태그 색상 반전 *
     color: var(--accent);
     font-size: 1em;
 }
-
 
 .back-to-list-btn { /* 목록으로 돌아가기 버튼 */
     display: inline-block;
@@ -1099,7 +1101,6 @@ body.dark-mode .back-to-list-btn:hover {
     color: var(--accent);
     filter: none; /* 밝기 필터 제거 */
 }
-
 
 /* --- 반응형 디자인 조정 --- */
 @media (max-width: 768px) {
@@ -1135,5 +1136,58 @@ body.dark-mode .back-to-list-btn:hover {
         width: 100%; /* 버튼 너비 100% */
         text-align: center; /* 텍스트 가운데 정렬 */
         box-sizing: border-box; /* 패딩 포함 너비 계산 */
+    }
+}
+
+.scroll-fade-image {
+    display: block; /* 이미지가 블록 요소처럼 동작하도록 */
+    max-width: 85%; /* 이미지 최대 너비 (조절 가능) */
+    height: auto; /* 높이는 비율에 맞게 자동 조절 */
+    margin: 40px auto; /* 위아래 여백 및 가로 중앙 정렬 */
+    border-radius: 8px; /* 모서리 둥글게 */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12); /* 그림자 효과 */
+    background-color: var(--post-bg); /* 이미지 로딩 전 배경색 */
+
+    /* --- 초기 상태 --- */
+    opacity: 0; /* 투명하게 시작 */
+    transition: opacity 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 전환 효과 */
+    will-change: opacity, transform; /* 브라우저에 성능 최적화 힌트 제공 */
+}
+
+/* 좌측에서 페이드인 될 요소의 초기 상태 */
+.scroll-fade-image.fade-in-left {
+    transform: translateX(-70px) scale(0.9); /* 왼쪽 밖에서 약간 작게 시작 */
+}
+
+/* 우측에서 페이드인 될 요소의 초기 상태 */
+.scroll-fade-image.fade-in-right {
+    transform: translateX(70px) scale(0.9); /* 오른쪽 밖에서 약간 작게 시작 */
+}
+
+/* 화면에 보여질 때(is-visible 클래스 추가 시) 적용될 최종 상태 */
+.scroll-fade-image.is-visible {
+    opacity: 1; /* 완전히 보이게 */
+    transform: translateX(0) scale(1); /* 원래 위치와 크기로 복귀 */
+}
+
+/* 이미지 컨테이너 (선택적: 이미지 그룹 간 여백 등 조절) */
+.detail-images-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* --- 반응형 조정 --- */
+@media (max-width: 768px) {
+    .scroll-fade-image {
+        max-width: 100%; /* 모바일에서는 꽉 차게 */
+        margin: 30px auto;
+    }
+    /* 모바일에서는 효과 강도 약하게 (선택적) */
+    .scroll-fade-image.fade-in-left {
+        transform: translateX(-40px) scale(0.95);
+    }
+    .scroll-fade-image.fade-in-right {
+        transform: translateX(40px) scale(0.95);
     }
 }
