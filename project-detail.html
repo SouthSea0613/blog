@@ -18,12 +18,12 @@
 
 <main>
     <section id="project-details" class="content js-scroll-fade-in">
-        <h2 id="project-title" style="min-height: 1.2em;"></h2>
-        <img id="project-image" src="" alt="프로젝트 이미지" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 30px; display: none; box-shadow: 0 4px 10px var(--shadow-color); opacity: 0; transition: opacity 0.5s;">
+        <h2 id="project-title" style="min-height: 1.2em;"></h2> <div class="project-meta">
+        <p><strong>🗓️ 프로젝트 기간:</strong> <span id="project-period"></span></p>
+    </div>
 
-        <div class="project-meta">
-            <p><strong>🗓️ 프로젝트 기간:</strong> <span id="project-period"></span></p>
-            <p><strong>🛠️ 사용 기술:</strong> <span id="project-tech"></span></p>
+        <div id="project-image-gallery" class="detail-images-container">
+            <h3>🖼️ 프로젝트 이미지</h3>
         </div>
 
         <h3>📄 프로젝트 소개</h3>
@@ -35,6 +35,14 @@
         <ul id="project-roles">
             <li>역할 정보를 로딩 중입니다...</li>
         </ul>
+
+        <h3>🛠️ 사용 기술</h3>
+        <div id="project-tech-categories">
+        </div>
+
+        <h3>🔗 관련 링크</h3>
+        <div id="project-links">
+        </div>
 
         <a href="index.html" class="back-to-list-btn">← 전체 목록으로 돌아가기</a>
 
@@ -48,19 +56,31 @@
 <script src="script.js"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', async () => {
+    /**
+     * 프로젝트 상세 페이지 초기화 함수
+     * - URL 파라미터에서 프로젝트 ID를 가져옵니다.
+     * - data.json 파일을 비동기적으로 로드합니다.
+     * - 해당 ID의 프로젝트 데이터를 찾아 페이지에 동적으로 표시합니다.
+     * (제목, 기간, 설명, 역할, 이미지 갤러리, 기술 스택(카테고리별), 관련 링크)
+     * - 이미지 로드 및 스크롤 페이드인 효과를 적용합니다.
+     * - 오류 발생 시 적절한 메시지를 표시합니다.
+     */
+    async function initializeProjectDetails() {
+        // --- DOM 요소 선택 ---
         const urlParams = new URLSearchParams(window.location.search);
-        const projectId = urlParams.get('id');
+        const projectId = urlParams.get('id'); // URL에서 'id' 파라미터 가져오기
         const detailsSection = document.getElementById('project-details');
         const titleElement = document.getElementById('project-title');
         const periodElement = document.getElementById('project-period');
-        const techElement = document.getElementById('project-tech');
         const descriptionElement = document.getElementById('project-description');
         const rolesListElement = document.getElementById('project-roles');
-        const imageElement = document.getElementById('project-image');
+        const imageGalleryContainer = document.getElementById('project-image-gallery');
+        const techCategoriesContainer = document.getElementById('project-tech-categories');
+        const linksContainer = document.getElementById('project-links');
         const backButton = document.querySelector('.back-to-list-btn');
 
-        // 뒤로가기 버튼 텍스트 및 동작 변경 (이전 페이지가 index.html이면)
+        // --- 뒤로가기 버튼 설정 ---
+        // 이전 페이지가 메인(index.html)이면 '이전 페이지로' 텍스트 변경 및 history.back() 사용
         if (backButton && document.referrer && document.referrer.includes('index.html')) {
             backButton.textContent = '← 이전 페이지로 돌아가기';
             backButton.onclick = (e) => {
@@ -69,58 +89,106 @@
             };
         }
 
-        // 필수 요소 없으면 에러 처리
-        if (!projectId || !detailsSection || !titleElement || !periodElement || !techElement || !descriptionElement || !rolesListElement || !imageElement) {
+        // --- 필수 요소 검사 ---
+        if (!projectId || !detailsSection || !titleElement || !periodElement || !descriptionElement || !rolesListElement || !imageGalleryContainer || !techCategoriesContainer || !linksContainer) {
+            // 필수 요소 중 하나라도 없으면 오류 처리
             if (titleElement) titleElement.textContent = '페이지 로딩 오류';
             if (descriptionElement) descriptionElement.innerHTML = '<p>페이지의 필수 구성 요소를 찾을 수 없습니다. HTML 구조를 확인해주세요.</p>';
             console.error('Project detail page initialization failed: Essential elements not found.');
-            if(backButton) backButton.style.display = 'block'; // 뒤로가기 버튼은 표시
-            return;
+            if (backButton) backButton.style.display = 'block'; // 뒤로가기 버튼은 항상 표시
+            return; // 함수 종료
         }
 
-        // 데이터 로딩 및 표시
+        // --- 데이터 로딩 및 표시 ---
         try {
+            // data.json 파일 가져오기
             const response = await fetch('data.json');
-            if (!response.ok) throw new Error(`데이터 파일을 불러오는데 실패했습니다. (status: ${response.status})`);
-            const data = await response.json();
+            if (!response.ok) {
+                // HTTP 오류 발생 시
+                throw new Error(`데이터 파일을 불러오는데 실패했습니다. (status: ${response.status})`);
+            }
+            const data = await response.json(); // JSON 파싱
+
+            // 해당 projectId에 맞는 프로젝트 데이터 찾기
             const project = data.projects.find(p => p.id === projectId);
 
+            // --- 프로젝트 데이터가 없을 경우 처리 ---
             if (!project) {
                 titleElement.textContent = '프로젝트 없음';
                 descriptionElement.innerHTML = `<p>요청하신 ID ('${projectId}')에 해당하는 프로젝트 정보를 찾을 수 없습니다.</p>`;
-                // 관련 정보 영역 숨김
+                // 관련 정보 영역 숨기기
                 periodElement.closest('.project-meta').style.display = 'none';
-                rolesListElement.previousElementSibling.style.display = 'none'; // h3 숨김
+                imageGalleryContainer.style.display = 'none';
+                descriptionElement.previousElementSibling.style.display = 'none'; // 소개 h3
+                rolesListElement.previousElementSibling.style.display = 'none'; // 역할 h3
                 rolesListElement.style.display = 'none';
-                if(backButton) backButton.style.display = 'block';
-                return;
+                techCategoriesContainer.previousElementSibling.style.display = 'none'; // 기술 h3
+                techCategoriesContainer.style.display = 'none';
+                linksContainer.previousElementSibling.style.display = 'none'; // 링크 h3
+                linksContainer.style.display = 'none';
+                if (backButton) backButton.style.display = 'block';
+                return; // 함수 종료
             }
 
-            // 데이터 바인딩
-            document.title = `${project.title || '프로젝트 상세'} - 김남해`;
-            titleElement.textContent = project.title || '제목 없음';
+            // --- 프로젝트 데이터 바인딩 ---
 
-            if (project.detailImage) {
-                imageElement.src = project.detailImage;
-                imageElement.alt = `${project.title || '프로젝트'} 상세 이미지`;
-                imageElement.style.display = 'block';
-                // 이미지 로드 완료 후 표시 (부드러운 효과)
-                imageElement.onload = () => { imageElement.style.opacity = 1; };
-            } else {
-                imageElement.style.display = 'none';
-            }
+            // 1. 페이지 타이틀 및 프로젝트 제목 설정
+            document.title = `${project.title || '프로젝트 상세'} - 김남해`; // 브라우저 탭 제목
+            titleElement.textContent = project.title || '제목 없음'; // 페이지 내 제목
 
+            // 2. 프로젝트 기간 설정
             periodElement.textContent = project.period || '정보 없음';
 
-            if (project.technologies && project.technologies.length > 0) {
-                techElement.innerHTML = project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join(' ');
+            // 3. 상세 이미지 갤러리 생성
+            imageGalleryContainer.innerHTML = '<h3>🖼️ 프로젝트 이미지</h3>'; // 갤러리 제목 초기화
+            if (project.detailImages && project.detailImages.length > 0) {
+                project.detailImages.forEach((imageData, index) => {
+                    const itemContainer = document.createElement('div');
+                    // 각 이미지 아이템에 스크롤 페이드인 효과 적용 클래스 추가
+                    itemContainer.classList.add('detail-image-item', 'scroll-fade-item');
+
+                    const img = document.createElement('img');
+                    let imgSrc = '';
+                    let imgDesc = '';
+
+                    // 이미지 데이터 형태 확인 (단순 경로 문자열 or {src, description} 객체)
+                    if (typeof imageData === 'string') {
+                        imgSrc = imageData; // 경로 문자열인 경우
+                    } else if (typeof imageData === 'object' && imageData.src) {
+                        imgSrc = imageData.src; // 객체 형태인 경우 src 추출
+                        imgDesc = imageData.description || ''; // 설명이 있으면 추출
+                    }
+
+                    // 유효한 이미지 경로가 있을 경우 이미지 및 설명 추가
+                    if (imgSrc) {
+                        img.src = imgSrc;
+                        img.alt = `${project.title || '프로젝트'} 상세 이미지 ${index + 1}` + (imgDesc ? ` - ${imgDesc}` : '');
+                        img.loading = 'lazy'; // 이미지 지연 로딩 설정
+                        itemContainer.appendChild(img);
+
+                        // 설명이 존재하면 이미지 아래에 <p> 태그로 추가
+                        if (imgDesc) {
+                            const descP = document.createElement('p');
+                            descP.classList.add('image-description');
+                            descP.textContent = imgDesc;
+                            itemContainer.appendChild(descP);
+                        }
+
+                        imageGalleryContainer.appendChild(itemContainer); // 완성된 아이템 컨테이너를 갤러리에 추가
+                    }
+                });
             } else {
-                techElement.innerHTML = '<span class="no-info">정보 없음</span>'; // 정보 없을 때 표시
+                // 상세 이미지가 없을 경우 메시지 표시
+                const noImageP = document.createElement('p');
+                noImageP.textContent = '상세 이미지가 없습니다.';
+                imageGalleryContainer.appendChild(noImageP);
             }
 
+            // 4. 프로젝트 소개 설정
             descriptionElement.innerHTML = project.description || '<p class="no-info">상세 설명이 없습니다.</p>';
 
-            rolesListElement.innerHTML = ''; // 기존 내용 비우기
+            // 5. 나의 역할 및 기여 설정
+            rolesListElement.innerHTML = ''; // 기존 목록 비우기
             if (project.roles && project.roles.length > 0) {
                 project.roles.forEach(role => {
                     const li = document.createElement('li');
@@ -131,21 +199,118 @@
                 rolesListElement.innerHTML = '<li class="no-info">기여 역할 정보가 없습니다.</li>';
             }
 
-            // 로드 완료 후 스크롤 페이드인 효과 적용되도록
-            // detailsSection에 js-scroll-fade-in 클래스가 이미 있으므로 script.js에서 처리
+            // 6. 기술 스택 (카테고리별) 설정
+            techCategoriesContainer.innerHTML = ''; // 기존 내용 비우기
+            // data.json에서 technologyCategories 객체가 있는지, 비어있지 않은지 확인
+            if (project.technologyCategories && Object.keys(project.technologyCategories).length > 0) {
+                // 카테고리별로 반복
+                for (const category in project.technologyCategories) {
+                    // 해당 카테고리에 기술 목록이 있는지 확인
+                    if (project.technologyCategories.hasOwnProperty(category)) {
+                        const techs = project.technologyCategories[category]; // 기술 배열
+                        // 기술 배열이 존재하고 비어있지 않은 경우
+                        if (techs && techs.length > 0) {
+                            const categoryDiv = document.createElement('div');
+                            categoryDiv.classList.add('tech-category'); // 스타일링 클래스
+
+                            // 카테고리 제목 (h4) 생성
+                            const categoryTitle = document.createElement('h4');
+                            categoryTitle.textContent = category; // 카테고리 이름
+                            categoryDiv.appendChild(categoryTitle);
+
+                            // 기술 태그들을 담을 컨테이너 생성
+                            const techList = document.createElement('div');
+                            techList.classList.add('tech-tags-container');
+                            // 각 기술에 대해 태그 생성
+                            techs.forEach(tech => {
+                                const techTag = document.createElement('span');
+                                techTag.classList.add('tech-tag'); // 스타일링 클래스
+                                techTag.textContent = tech; // 기술 이름
+                                techList.appendChild(techTag); // 태그 컨테이너에 추가
+                            });
+                            categoryDiv.appendChild(techList); // 완성된 태그 목록을 카테고리 div에 추가
+                            techCategoriesContainer.appendChild(categoryDiv); // 완성된 카테고리 div를 전체 컨테이너에 추가
+                        }
+                    }
+                }
+            } else {
+                // 기술 스택 정보가 없을 경우 메시지 표시
+                techCategoriesContainer.innerHTML = '<p class="no-info">기술 스택 정보가 없습니다.</p>';
+            }
+
+
+            // 7. 관련 링크 설정
+            linksContainer.innerHTML = ''; // 기존 링크 비우기
+            // data.json에 links 배열이 있고 비어있지 않은 경우
+            if (project.links && project.links.length > 0) {
+                project.links.forEach(link => {
+                    // 링크 객체에 URL이 있는 경우 <a> 태그 생성
+                    if (link.url) {
+                        const anchor = document.createElement('a');
+                        anchor.href = link.url;
+                        anchor.textContent = link.text || '링크'; // 링크 텍스트 (없으면 '링크')
+                        anchor.target = '_blank'; // 새 탭에서 열기
+                        anchor.rel = 'noopener noreferrer'; // 보안 권장 사항
+                        anchor.classList.add('project-link-item'); // 스타일링 클래스
+                        linksContainer.appendChild(anchor); // 링크 컨테이너에 추가
+                    }
+                    // URL은 없고 텍스트만 있는 경우 (예: "비공개") <span> 태그 생성
+                    else if (link.text) {
+                        const textSpan = document.createElement('span');
+                        textSpan.textContent = link.text;
+                        textSpan.classList.add('project-link-item', 'no-link'); // 스타일링 클래스
+                        linksContainer.appendChild(textSpan); // 링크 컨테이너에 추가
+                    }
+                });
+            }
+            // links 배열이 없고 기존 resultNote 필드가 있으면 표시 (하위 호환성)
+            else if (project.resultNote) {
+                const textSpan = document.createElement('span');
+                textSpan.textContent = project.resultNote;
+                textSpan.classList.add('project-link-item', 'no-link');
+                linksContainer.appendChild(textSpan);
+            }
+            // 링크 정보가 전혀 없을 경우 메시지 표시
+            else {
+                linksContainer.innerHTML = '<p class="no-info">관련 링크가 없습니다.</p>';
+            }
+
+
+            // --- 스크롤 페이드 인 효과 재초기화 ---
+            // 동적으로 생성된 요소(.scroll-fade-item)들에 대해 스크롤 효과를 적용하기 위해
+            // 메인 스크립트(script.js)의 initializeScrollFadeIn 함수를 다시 호출합니다.
+            // 이 함수는 페이지 로드 시뿐만 아니라 필요할 때 재호출될 수 있도록 설계되어야 합니다.
+            if (typeof initializeScrollFadeIn === 'function') {
+                // 동적으로 추가된 .scroll-fade-item 요소들을 위해 스크롤 감지 재시작
+                initializeScrollFadeIn();
+            } else {
+                // 함수를 찾을 수 없는 경우 경고 (script.js 로드 확인 필요)
+                console.warn("initializeScrollFadeIn function not found. Scroll effects for dynamic content might not work.");
+            }
+
 
         } catch (error) {
+            // --- 오류 처리 ---
             console.error('프로젝트 상세 정보 로딩 오류:', error);
             titleElement.textContent = '오류 발생';
             descriptionElement.innerHTML = `<p>프로젝트 정보를 불러오는 중 문제가 발생했습니다.</p><p style="color: red;">${error.message}</p>`;
-            // 오류 시 관련 정보 숨김
+            // 오류 발생 시 관련 섹션 숨기기 (필수 요소가 아닌 부분들)
             periodElement.closest('.project-meta').style.display = 'none';
-            rolesListElement.previousElementSibling.style.display = 'none'; // h3 숨김
-            rolesListElement.style.display = 'none';
-            if (imageElement) imageElement.style.display = 'none';
-            if(backButton) backButton.style.display = 'block';
+            imageGalleryContainer.style.display = 'none';
+            descriptionElement.previousElementSibling.style.display = 'none'; // 소개 h3
+            rolesListElement.previousElementSibling.style.display = 'none'; // 역할 h3
+            rolesListElement.style.display = 'none'; // 역할 목록
+            techCategoriesContainer.previousElementSibling.style.display = 'none'; // 기술 h3
+            techCategoriesContainer.style.display = 'none'; // 기술 목록
+            linksContainer.previousElementSibling.style.display = 'none'; // 링크 h3
+            linksContainer.style.display = 'none'; // 링크 목록
+            if (backButton) backButton.style.display = 'block'; // 뒤로가기 버튼은 표시
         }
-    });
+    }
+
+    // --- 페이지 로드 완료 시 초기화 함수 실행 ---
+    // DOMContentLoaded 이벤트는 HTML 파싱 완료 후 발생
+    document.addEventListener('DOMContentLoaded', initializeProjectDetails);
 </script>
 </body>
 </html>

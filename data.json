@@ -7,21 +7,12 @@
       "sliderImage": "image/card.jpg",
       "altText": "Character Augmented Reality Defense 프로젝트 이미지",
       "period": "2022.08 ~ 2023.05",
-      "technologies": [
-        "C++",
-        "UE Blueprint",
-        "Java",
-        "ARCore 1.7",
-        "ARKit 3.0",
-        "Unreal Engine 5",
-        "Visual Studio",
-        "CLion",
-        "Android Studio",
-        "Git",
-        "SourceTree",
-        "Excel",
-        "PPT"
-      ],
+      "technologyCategories": {
+        "언어": ["C++", "Java"],
+        "엔진/플랫폼": ["Unreal Engine 5", "ARCore 1.7", "ARKit 3.0"],
+        "도구": ["Visual Studio", "CLion", "Android Studio", "Git", "SourceTree", "Excel", "PPT"],
+        "기타": ["UE Blueprint"]
+      },
       "description": "<p>책상위의 평면 및 사물을 인식하여 장애물로 활용하고, 2D 굿즈(띠부씰 등) 이미지 인식을 통해 가상 타워를 생성하여 진행하는 AR 디펜스 게임 애플리케이션입니다.</p><p>Unreal Engine 5 기반으로 개발되었으며, ARCore와 ARKit을 활용하여 현실 공간과의 상호작용을 구현했습니다. 졸업작품 발표에서 금상을 수상했습니다.</p>",
       "roles": [
         "팀장",
@@ -30,11 +21,14 @@
         "졸업작품 경쟁력 확보 전략 수립",
         "최종 프레젠테이션 발표 및 금상 수상 기여"
       ],
-      "detailImage": "image/card.jpg",
       "detailImages": [
+        "image/card.jpg",
         "image/hts.jpg"
       ],
-      "resultLink": "https://www.youtube.com/watch?v=4EHBmFiC97Mhttps://drive.google.com/file/d/1G12iSY7NPMnQKy9FOQJT1capCuIfenMI/view"
+      "links": [
+        { "url": "https://www.youtube.com/watch?v=4EHBmFiC97M", "text": "YouTube 데모 영상" },
+        { "url": "https://drive.google.com/file/d/1G12iSY7NPMnQKy9FOQJT1capCuIfenMI/view", "text": "GitHub 저장소" }
+      ]
     },
     {
       "id": "project2",
@@ -43,16 +37,12 @@
       "sliderImage": "image/그림3.png",
       "altText": "Hex Tile Strategy 프로젝트 이미지",
       "period": "2023.03 ~ 2024.08",
-      "technologies": [
-        "C#",
-        "Unity",
-        "Hex Maps Tutorials",
-        "Visual Studio",
-        "CLion",
-        "Git",
-        "Google Sheets",
-        "Google Slide"
-      ],
+      "technologyCategories": {
+        "언어": ["C#"],
+        "엔진/플랫폼": ["Unity"],
+        "튜토리얼/참고": ["Hex Maps Tutorials"],
+        "도구": ["Visual Studio", "CLion", "Git", "Google Sheets", "Google Slide"]
+      },
       "description": "<p>기존 사각형 타일맵의 한계를 벗어나 육각형 타일맵을 기반으로 더 다양한 전략과 기능을 구현하는 턴제 전략 게임입니다.</p><p>Unity 엔진을 사용하여 개발되었으며, 육각형 타일맵 구현 및 좌표계 재구성, TCG 스타일 UI 구현, 오브젝트 정규화 등을 진행했습니다.</p>",
       "roles": [
         "팀장 (Project Director)",
@@ -63,12 +53,14 @@
         "TCG 스타일 UI (카드, 유닛 스킬 등) 구현",
         "오브젝트(타일, 유닛, 지형 등) 정규화 및 코드 재구성"
       ],
-      "detailImage": "image/그림3.png",
       "detailImages": [
+        "image/그림3.png",
         "image/그림5.png",
         "image/그림6.png"
       ],
-      "resultNote": "팀원 요청에 의한 공개 불가"
+      "links": [
+        { "text": "팀원 요청에 의한 비공개" }
+      ]
     },
     {
       "id": "project3",
@@ -77,29 +69,16 @@
       "sliderImage": "image/sheep.png",
       "altText": "우리들의 편한 인테리어 프로젝트 이미지",
       "period": "2025.02 ~ 2025.04",
-      "technologies": [
-        "Java",
-        "JavaScript",
-        "HTML",
-        "CSS",
-        "MySQL",
-        "Spring Boot",
-        "jQuery",
-        "JSON",
-        "Thymeleaf",
-        "MyBatis",
-        "Spring Security",
-        "Lombok",
-        "Eclipse",
-        "IntelliJ",
-        "Apache Tomcat 9.0",
-        "Git",
-        "GitHub Desktop",
-        "SourceTree",
-        "ERDCloud",
-        "Google Sheets",
-        "Google Slide"
-      ],
+      "technologyCategories": {
+        "개발산출문서": ["ERDCloud", "Google Sheets", "Google Slide"],
+        "DB설계": ["MySQL"],
+        "IDE 도구": ["Eclipse", "IntelliJ"],
+        "웹 서버": ["Apache Tomcat 9.0"],
+        "언어": ["Java", "JavaScript", "HTML", "CSS"],
+        "라이브러리": ["jQuery", "JSON", "Thymeleaf", "MyBatis", "Spring Security", "Lombok"],
+        "프레임워크": ["Spring Boot"],
+        "버전관리도구": ["Git", "GitHub Desktop", "SourceTree"]
+      },
       "description": "<p>소비자가 인테리어 희망 사항을 입력하면 판매자가 견적을 제출하고, 소비자는 역경매 방식으로 선택하는 가격 비교 플랫폼 웹앱입니다.</p><p>거래 내역 지도 표시, 리뷰 작성 기능을 통해 인테리어 시장 활성화를 목표로 합니다. Spring Boot 기반으로 개발되었습니다.</p>",
       "roles": [
         "팀장 (Project Manager)",
@@ -110,8 +89,8 @@
         "PPT 작성 및 발표",
         "CI/CD 배포 및 유지보수 관리 위한 코드 수정"
       ],
-      "detailImage": "image/sheep.png",
       "detailImages": [
+        "image/sheep.png"
       ],
       "links": [
         { "url": "https://github.com/SouthSea0613/sheep", "text": "GitHub Repository" },
